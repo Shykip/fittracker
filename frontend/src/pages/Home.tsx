@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import Dashboard from '../components/dashboard/Dashboard';
 import { useNavigate } from 'react-router-dom';
 import Activites from '../components/activites/Activites';
+import Group from '../components/group/Group';
 import Profile from '../components/profile/Profile';
 
 function Home() {
@@ -75,7 +76,10 @@ function Home() {
                 {activeTab === 1 && (
                     <Activites activities={activities} activityRecord={activityRecord} updateActivitesRecord={updateActivitesRecord} />
                 )}
-                {(activeTab === 2 || activeTab === 3) && <h1>404 not found</h1>}
+                {activeTab === 2 && (
+                    <Group activities={activities} activityRecord={activityRecord} updateActivitesRecord={updateActivitesRecord} />
+                )}
+                {(activeTab === 3) && <h1>404 not found</h1>}
             </div>
             </div>
         

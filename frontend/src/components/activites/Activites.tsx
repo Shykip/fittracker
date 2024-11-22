@@ -1,5 +1,7 @@
 import Fitness from '../../assets/images/login.jpg'
 import apiHandler from '../../services/api'
+import deleteIconBlack from '../../assets/images/delete-black.png'
+import deleteIconWhite from '../../assets/images/delete-white.png'
 import { useState, useEffect } from 'react'
 
 function Activites({activities, activityRecord, updateActivitesRecord}: any) {
@@ -31,6 +33,15 @@ function Activites({activities, activityRecord, updateActivitesRecord}: any) {
         formdata.append('duration_min', inputDuration)
         
         const response = await apiHandler(formdata, 'fitness_record', 'post')
+        if (response && response.success === true) {
+            setAddActivityTab(false)
+            updateActivitesRecord()
+        }
+    }
+
+    const handleRecordDelete = async (id: string) => {
+        const formdata = new FormData()
+        const response = await apiHandler(formdata, 'fitness_record?targetId='+id, 'delete')
         if (response && response.success === true) {
             setAddActivityTab(false)
             updateActivitesRecord()
@@ -88,11 +99,17 @@ function Activites({activities, activityRecord, updateActivitesRecord}: any) {
                             <p>Calories Burnt</p>
                             <p className="text-title font-bold">{Math.floor(activityRecord[0].calories_burnt)}</p>
                         </div>
-                        <div className=" w-2/5 flex flex-col justify-center items-center ">
+                        <div className=" w-2/5 flex flex-col justify-center items-center border-r-2 border-dark border-opacity-50  ">
                             <p className=" text-subtitle text-dark ">{activityRecord[0].duration_min} min</p>
                             <p className=" text-header font-bold text-dark ">{activityRecord[0].activity.activity_name}</p>
+                        </div>
+                        <div className=" text-subtitle text-dark text-center">
+                            <div className="w-16 h-16 ml-8 mr-6">
+                                <img onClick={() => {handleRecordDelete(activityRecord[0].id)}} src={deleteIconBlack} className='w-14 h-14' alt="" />
+                            </div>
                             
-                        </div>    
+                        </div>
+
                     </div>
                 )}
 
@@ -107,9 +124,15 @@ function Activites({activities, activityRecord, updateActivitesRecord}: any) {
                                 <p>Calories Burnt</p>
                                 <p className="text-title font-bold">{Math.floor(record.calories_burnt)}</p>
                             </div>
-                            <div className="w-2/5 flex flex-col justify-center items-center">
+                            <div className="w-2/5 flex flex-col justify-center items-center border-r-2 border-dark border-opacity-50">
                                 <p className="text-subtitle">{record.duration_min} min</p>
                                 <p className="text-header font-bold">{record.activity.activity_name}</p>
+                            </div>
+                            <div className=" text-subtitle text-dark text-center">
+                                <div className="w-16 h-16 ml-8 mr-6">
+                                    <img onClick={() => {handleRecordDelete(record.id)}} src={deleteIconWhite} className='w-14 h-14' alt="" />
+                                </div>
+                            
                             </div>
                         </div>
                     );
