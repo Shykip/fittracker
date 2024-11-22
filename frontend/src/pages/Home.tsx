@@ -77,7 +77,7 @@ function Home() {
                     <Activites activities={activities} activityRecord={activityRecord} updateActivitesRecord={updateActivitesRecord} />
                 )}
                 {activeTab === 2 && (
-                    <Group activities={activities} activityRecord={activityRecord} updateActivitesRecord={updateActivitesRecord} />
+                    <Group updateActivitesRecord={updateActivitesRecord} />
                 )}
                 {(activeTab === 3) && <h1>404 not found</h1>}
             </div>
